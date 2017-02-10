@@ -99,6 +99,8 @@
     <message key="xmlui.ArtifactBrowser.AbstractSearch.type_advisor_browse">Browsing by: Advisor</message>
     <message key="xmlui.ArtifactBrowser.AbstractSearch.type_department_browse">Browsing by: Department</message>
     <message key="xmlui.ArtifactBrowser.AbstractSearch.type_dateissued_dt_browse">Browsing by: Issue date</message>
+    <message key="xmlui.ArtifactBrowser.AbstractSearch.type_citation_browse">Browsing by: Citation</message>
+    <message key="xmlui.ArtifactBrowser.AbstractSearch.type_taskcode_browse">Browsing by: TaskCode</message>
 
     <message key="xmlui.ArtifactBrowser.SimpleSearch.filter.title">Title</message>
     <message key="xmlui.ArtifactBrowser.SimpleSearch.filter.dateIssued">Date issued</message>
@@ -108,12 +110,14 @@
     <message key="xmlui.dri2xhtml.structural.pagination-info.nototal">Now showing items {0}-{1}</message>
 
     <message key="xmlui.Discovery.AbstractSearch.type_author">Filter by: Author</message>
+    <message key="xmlui.Discovery.AbstractSearch.type_subject">Filter by: Subject</message>
     <message key="xmlui.ArtifactBrowser.SimpleSearch.filter.author">Author</message>
     <message key="xmlui.ArtifactBrowser.SimpleSearch.filter.author_filter">Author</message>
-    <message key="xmlui.Discovery.AbstractSearch.type_subject">Filter by: Subject</message>
     <message key="xmlui.ArtifactBrowser.SimpleSearch.filter.subject">Subject</message>
     <message key="xmlui.ArtifactBrowser.SimpleSearch.filter.subject_filter">Subject</message>
     <message key="xmlui.ArtifactBrowser.SimpleSearch.filter.dateIssued.year">Date Issued</message>
+    <message key="xmlui.ArtifactBrowser.SimpleSearch.filter.taskcode">TaskCode</message>
+    <message key="xmlui.ArtifactBrowser.SimpleSearch.filter.citation">Citation</message>
 
 
     <message key="xmlui.Discovery.AbstractSearch.startswith">Starts with</message>
@@ -123,9 +127,13 @@
     <message key="xmlui.Discovery.AbstractSearch.sort_by.relevance">Relevance</message>
     <message key="xmlui.Discovery.AbstractSearch.sort_by.dc.title_sort_desc">Title Desc</message>
     <message key="xmlui.Discovery.AbstractSearch.sort_by.dc.date.issued_dt_desc">Issue Date Desc</message>
+    <message key="xmlui.Discovery.AbstractSearch.sort_by.dc.taskcode_sort_desc">TaskCode Desc</message>
+    <message key="xmlui.Discovery.AbstractSearch.sort_by.dc.citation_sort_desc">Citation Desc</message>
 
     <message key="xmlui.Discovery.AbstractSearch.sort_by.dc.title_sort_asc">Title Asc</message>
     <message key="xmlui.Discovery.AbstractSearch.sort_by.dc.date.issued_dt_asc">Issue Date Asc</message>
+    <message key="xmlui.Discovery.AbstractSearch.sort_by.dc.taskcode_sort_asc">TaskCode Asc</message>
+    <message key="xmlui.Discovery.AbstractSearch.sort_by.dc.citation_sort_asc">Citation Asc</message>
 
     <message key="xmlui.Discovery.AbstractSearch.rpp">Results Per Page:</message>
 

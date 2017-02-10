@@ -153,6 +153,12 @@
 	<message key="xmlui.ArtifactBrowser.ConfigurableBrowse.title.metadata.subject">Browsing {0} by Subject {1}</message>
 	<message key="xmlui.ArtifactBrowser.ConfigurableBrowse.trail.metadata.subject">Browsing {0} by Subject</message>
 
+	<message key="xmlui.ArtifactBrowser.ConfigurableBrowse.title.metadata.citation">Browsing {0} by Citation {1}</message>
+	<message key="xmlui.ArtifactBrowser.ConfigurableBrowse.trail.metadata.citation">Browsing {0} by Citation</message>
+
+	<message key="xmlui.ArtifactBrowser.ConfigurableBrowse.title.metadata.taskcode">Browsing {0} by TaskCode {1}</message>
+	<message key="xmlui.ArtifactBrowser.ConfigurableBrowse.trail.metadata.taskcode">Browsing {0} by TaskCode</message>
+
 	<message key="xmlui.ArtifactBrowser.ConfigurableBrowse.title.item.title">Browsing {0} by Title {1}</message>
 	<message key="xmlui.ArtifactBrowser.ConfigurableBrowse.trail.item.title">Browsing {0} by Title</message>
 
@@ -161,12 +167,6 @@
 
 	<message key="xmlui.ArtifactBrowser.ConfigurableBrowse.title.item.dateaccessioned">Browsing {0} by Submit Date {1}</message>
 	<message key="xmlui.ArtifactBrowser.ConfigurableBrowse.trail.item.dateaccessioned">Browsing {0} by Submit Date</message>
-
-	<message key="xmlui.ArtifactBrowser.ConfigurableBrowse.title.item.citation">Browsing {0} by Citation {1}</message>
-	<message key="xmlui.ArtifactBrowser.ConfigurableBrowse.trail.item.citation">Browsing {0} by Citation</message>
-
-	<message key="xmlui.ArtifactBrowser.ConfigurableBrowse.title.item.taskcode">Browsing {0} by TaskCode {1}</message>
-	<message key="xmlui.ArtifactBrowser.ConfigurableBrowse.trail.item.taskcode">Browsing {0} by TaskCode</message>
 
 
 	<!-- org.dspace.app.xmlui.administrative.WithdrawnItems.java -->

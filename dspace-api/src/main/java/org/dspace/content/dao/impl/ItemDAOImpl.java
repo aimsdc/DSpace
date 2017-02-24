@@ -119,7 +119,9 @@ public class ItemDAOImpl extends AbstractHibernateDSODAO<Item> implements ItemDA
         String hqlQueryString = "SELECT item FROM Item as item join item.metadata metadatavalue WHERE item.inArchive=:in_archive AND metadatavalue.metadataField = :metadata_field";
         if(value != null)
         {
-            hqlQueryString += " AND STR(metadatavalue.value) = :text_value";
+            //hqlQueryString += " AND STR(metadatavalue.value) = :text_value";
+            hqlQueryString += " AND SUBSTRING(metadatavalue.value, 1, 4000) = :text_value";
+            // lower(dbms_lob.substr(mv.text_value, 4000 , 1))
         }
         Query query = createQuery(context, hqlQueryString);
 
@@ -127,6 +129,7 @@ public class ItemDAOImpl extends AbstractHibernateDSODAO<Item> implements ItemDA
         query.setParameter("metadata_field", metadataField);
         if(value != null)
         {
+            if (value.length() > 4000) value = value.substring(0, 4000);
             query.setParameter("text_value", value);
         }
         return iterate(query);

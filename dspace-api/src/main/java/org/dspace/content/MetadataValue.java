@@ -45,6 +45,9 @@ public class MetadataValue implements ReloadableEntity<Integer>
     @Lob
     @Type(type="org.hibernate.type.MaterializedClobType")
     @Column(name="text_value")
+    private byte[] lobValue;
+
+    @Transient
     private String value;
 
     /** The language of the field, may be <code>null</code> */
@@ -155,6 +158,17 @@ public class MetadataValue implements ReloadableEntity<Integer>
         this.metadataField = metadataField;
     }
 
+    public byte[] getLobValue() {
+        return lobValue;
+    }
+
+    public void setLobValue(byte[] lobValue) {
+        this.lobValue = lobValue;
+        if (this.lobValue != null) {
+            this.value = new String(this.lobValue);
+        }
+    }
+
     /**
      * Get the metadata value.
      *
@@ -162,6 +176,9 @@ public class MetadataValue implements ReloadableEntity<Integer>
      */
     public String getValue()
     {
+        if (this.value == null && this.lobValue != null) {
+            value = new String(this.lobValue);
+        }
         return value;
     }
 

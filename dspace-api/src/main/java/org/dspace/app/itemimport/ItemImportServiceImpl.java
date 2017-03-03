@@ -298,7 +298,7 @@ public class ItemImportServiceImpl implements ItemImportService, InitializingBea
 
             Arrays.sort(dircontents, ComparatorUtils.naturalComparator());
 
-            // want to commit every 200 so we cab re-run the import process.
+            // want to commit every 50 so we cab re-run the import process.
             Integer processedCount = 0;
 
             for (int i = 0; i < dircontents.length; i++) {
@@ -325,7 +325,7 @@ public class ItemImportServiceImpl implements ItemImportService, InitializingBea
                     addItem(c, clist, sourceDir, dircontents[i], mapOut, template);
                     System.out.println(i + " " + dircontents[i]);
                     ++processedCount;
-                    if (processedCount % 200 == 0 && !isTest) {
+                    if (processedCount % 50 == 0 && !isTest) {
                         c.commit();
                         System.out.println(i + " committed 200 records");
                     }
@@ -353,6 +353,9 @@ public class ItemImportServiceImpl implements ItemImportService, InitializingBea
 
         // read in HashMap first, to get list of handles & source dirs
         Map<String, String> myHash = readMapFile(mapFile);
+
+        // want to commit every 50 so we cab re-run the import process.
+        Integer processedCount = 0;
 
         // for each handle, re-import the item, discard the new handle
         // and re-assign the old handle
@@ -394,6 +397,11 @@ public class ItemImportServiceImpl implements ItemImportService, InitializingBea
 
             deleteItem(c, oldItem);
             addItem(c, mycollections, sourceDir, newItemName, null, template);
+            ++processedCount;
+            if (processedCount % 50 == 0 && !isTest) {
+                c.commit();
+                System.out.println(" committed 200 records");
+            }
         }
     }
 

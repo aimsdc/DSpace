@@ -384,6 +384,13 @@ public class ItemImportCLITool {
                 // complete all transactions
                 c.complete();
             } catch (Exception e) {
+                // if we abort here on an add, and don't commit, we have a mapfile up to all processed so far
+                // and if we resume, all those already processed are not re-processed and haven't been
+                // committed to the database
+                if ("add".equals(command) && !isTest) {
+                    System.out.println("committing what has been processed so far for an add import so mapfile matches whats in the DB");
+                    c.commit();
+                }
                 c.abort();
                 e.printStackTrace();
                 System.out.println(e);

@@ -120,11 +120,13 @@ public class ItemImportServiceImpl implements ItemImportService, InitializingBea
 
     protected final String tempWorkDir = ConfigurationManager.getProperty("org.dspace.app.batchitemimport.work.dir");
 
+
     protected boolean isTest = false;
     protected boolean isResume = false;
     protected boolean useWorkflow = false;
     protected boolean useWorkflowSendEmail = false;
     protected boolean isQuiet = false;
+    protected Integer commitAfterProcessingCount = 50;
 
     @Override
     public void afterPropertiesSet() throws Exception {
@@ -325,9 +327,9 @@ public class ItemImportServiceImpl implements ItemImportService, InitializingBea
                     addItem(c, clist, sourceDir, dircontents[i], mapOut, template);
                     System.out.println(i + " " + dircontents[i]);
                     ++processedCount;
-                    if (processedCount % 50 == 0 && !isTest) {
+                    if (processedCount % commitAfterProcessingCount == 0 && !isTest) {
                         c.commit();
-                        System.out.println(i + " committed 200 records");
+                        System.out.println(i + " committed " + commitAfterProcessingCount + " records");
                     }
                 }
             }
@@ -398,9 +400,9 @@ public class ItemImportServiceImpl implements ItemImportService, InitializingBea
             deleteItem(c, oldItem);
             addItem(c, mycollections, sourceDir, newItemName, null, template);
             ++processedCount;
-            if (processedCount % 50 == 0 && !isTest) {
+            if (processedCount % commitAfterProcessingCount == 0 && !isTest) {
                 c.commit();
-                System.out.println(" committed 200 records");
+                System.out.println(" committed " + commitAfterProcessingCount + " records");
             }
         }
     }

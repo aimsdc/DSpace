@@ -417,6 +417,9 @@ public class ItemImportServiceImpl implements ItemImportService, InitializingBea
         // now delete everything that appeared in the mapFile
         Iterator<String> i = myhash.keySet().iterator();
 
+        // want to commit every 50 so we cab re-run the import process.
+        Integer processedCount = 0;
+
         while (i.hasNext()) {
             String itemID = myhash.get(i.next());
 
@@ -429,6 +432,11 @@ public class ItemImportServiceImpl implements ItemImportService, InitializingBea
                 Item myitem = itemService.findByIdOrLegacyId(c, itemID);
                 System.out.println("Deleting item " + itemID);
                 deleteItem(c, myitem);
+            }
+            ++processedCount;
+            if (processedCount % commitAfterProcessingCount == 0 && !isTest) {
+                c.commit();
+                System.out.println(" committed " + commitAfterProcessingCount + " records");
             }
         }
     }

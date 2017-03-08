@@ -614,6 +614,7 @@
         <scope_note></scope_note>
     </dc-type>
 
+    <!-- ######################### -->
     <!-- Extensions added for AIMS -->
     <dc-type>
         <schema>dc</schema>
@@ -632,8 +633,73 @@
     <dc-type>
         <schema>dc</schema>
         <element>aims</element>
+        <qualifier>maid</qualifier>
+        <scope_note>Manuscript Tracker Identifier, stripped on harvest</scope_note>
+    </dc-type>
+
+    <dc-type>
+        <schema>dc</schema>
+        <element>aims</element>
         <qualifier>taskcode</qualifier>
         <scope_note>For AIMS reporting, financial task code</scope_note>
+    </dc-type>
+
+    <dc-type>
+        <schema>dc</schema>
+        <element>aims</element>
+        <qualifier>mesturi</qualifier>
+        <scope_note>Link to Internal Metadata Catalogue, stripped on harvest</scope_note>
+    </dc-type>
+
+    <!-- remaining extensions still defined to enable error free migration, they are redundant moving forward -->
+
+    <dc-type>
+        <schema>dc</schema>
+        <element>subject</element>
+        <qualifier>gcmdv6</qualifier>
+        <scope_note>Global Change Master Directory (GCMD) Version 6</scope_note>
+    </dc-type>
+
+    <dc-type>
+        <schema>dc</schema>
+        <element>subject</element>
+        <qualifier>rfcd</qualifier>
+        <scope_note>Research Fields, Courses and Disciplines (RFCD)</scope_note>
+    </dc-type>
+
+    <dc-type>
+        <schema>dc</schema>
+        <element>subject</element>
+        <qualifier>asfa</qualifier>
+        <scope_note>Aquatic Sciences and Fisheries Abstracts thesaurus</scope_note>
+    </dc-type>
+
+    <dc-type>
+        <schema>dc</schema>
+        <element>aims</element>
+        <qualifier>kpiyear</qualifier>
+        <scope_note>For AIMS reporting, Key Performance Indicator year</scope_note>
+    </dc-type>
+
+    <dc-type>
+        <schema>dc</schema>
+        <element>aims</element>
+        <qualifier>kpimonth</qualifier>
+        <scope_note>For AIMS reporting, Key Performance Indicator month</scope_note>
+    </dc-type>
+
+    <dc-type>
+        <schema>dc</schema>
+        <element>aims</element>
+        <qualifier>status</qualifier>
+        <scope_note>For AIMS reporting, status</scope_note>
+    </dc-type>
+
+    <dc-type>
+        <schema>dc</schema>
+        <element>aims</element>
+        <qualifier>collabstatus</qualifier>
+        <scope_note>For AIMS reporting, collaboration status</scope_note>
     </dc-type>
 
     <dc-type>
@@ -646,8 +712,48 @@
     <dc-type>
         <schema>dc</schema>
         <element>aims</element>
-        <qualifier>maid</qualifier>
-        <scope_note>Manuscript Tracker Identifier</scope_note>
+        <qualifier>kra</qualifier>
+        <scope_note>For AIMS reporting, Key Resource Assignment identifier</scope_note>
+    </dc-type>
+
+    <dc-type>
+        <schema>dc</schema>
+        <element>aims</element>
+        <qualifier>team</qualifier>
+        <scope_note>For AIMS reporting, Team identifier</scope_note>
+    </dc-type>
+
+    <dc-type>
+        <schema>dc</schema>
+        <element>aims</element>
+        <qualifier>program</qualifier>
+        <scope_note>For AIMS reporting, Program identifier</scope_note>
+    </dc-type>
+
+    <dc-type>
+        <schema>dc</schema>
+        <element>aims</element>
+        <qualifier>reportcouncil</qualifier>
+        <scope_note>For AIMS reporting, Selection list of council report periods updated by ADC when directed by
+            Research Office Report periods are of format 'CR-year/meeting number'</scope_note>
+    </dc-type>
+
+    <dc-type>
+        <schema>dc</schema>
+        <element>aims</element>
+        <qualifier>reportexec</qualifier>
+        <scope_note>For AIMS reporting, Selection list of exec report periods updated by ADC when directed by Research Office
+            Report periods are of format 'ER-year/meeting number'
+        </scope_note>
+    </dc-type>
+
+    <dc-type>
+        <schema>dc</schema>
+        <element>aims</element>
+        <qualifier>reportleadership</qualifier>
+        <scope_note>For AIMS reporting, Selection list of SLT report periods updated by ADC when directed by Research Office
+            Report periods are of format 'LR-year/meeting number'
+        </scope_note>
     </dc-type>
 
     <dc-type>

@@ -662,6 +662,7 @@ public class DatabaseUtils
         }
         catch(FlywayException fe)
         {
+            log.error("Exception in Flyway migration - " + fe.getMessage(), fe);
             // If any FlywayException (Runtime) is thrown, change it to a SQLException
             throw new SQLException("Flyway migration error occurred", fe);
         }

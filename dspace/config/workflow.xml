@@ -39,12 +39,17 @@
     </workflow>
 
     <!--Standard workflow step-->
-    <workflow start="reviewstep" id="editthenfinaledit">
+    <workflow start="editstep" id="editthenfinaledit">
 
         <roles>
-            <role id="editor" name="Editor" description="The people responsible for this step are able to edit the metadata of incoming submissions, and then accept or reject them."/>
-            <role id="finaleditor" name="Final Editor" description="The people responsible for this step are able to edit the metadata of incoming submissions, but will not be able to reject them."/>
+            <role id="editor"
+                  name="Editor"
+                  description="The people responsible for this step are able to edit the metadata of incoming submissions, and then accept or reject them."/>
+            <role id="finaleditor"
+                  name="Final Editor"
+                  description="The people responsible for this step are able to edit the metadata of incoming submissions, but will not be able to reject them."/>
         </roles>
+
         <step id="editstep" role="editor" userSelectionMethod="claimaction">
             <outcomes>
                 <step status="0">finaleditstep</step>
@@ -53,11 +58,13 @@
                 <action id="editaction"/>
             </actions>
         </step>
+
         <step id="finaleditstep" role="finaleditor" userSelectionMethod="claimaction">
             <actions>
                 <action id="finaleditaction"/>
             </actions>
         </step>
+
     </workflow>
 
     <!--Workflow where a reviewManager can select a single review who will then either accept/reject the item-->
@@ -66,7 +73,6 @@
             <role id="reviewer" name="Reviewer" scope="item" />
             <role id="reviewmanagers" name="ReviewManagers" scope="repository"/>
         </roles>
-
 
         <step id="selectReviewerStep" role="reviewmanagers" userSelectionMethod="claimaction">
             <outcomes>

@@ -299,4 +299,21 @@ public class ResourcePolicy implements ReloadableEntity<Integer> {
     public void setRpDescription(String description){
         this.rpdescription = description;
     }
+
+    @Override
+    public String toString() {
+        return "ResourcePolicy{" +
+                "id=" + id +
+                ", dSpaceObject=" + dSpaceObject +
+                ", resourceTypeId=" + resourceTypeId +
+                ", actionId=" + actionId +
+                ", eperson=" + eperson +
+                ", epersonGroup=" + epersonGroup +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", rpname='" + rpname + '\'' +
+                ", rptype='" + rptype + '\'' +
+                ", rpdescription='" + rpdescription + '\'' +
+                '}';
+    }
 }

@@ -249,4 +249,18 @@ public class Group extends DSpaceObject implements DSpaceObjectLegacySupport
         permanent = permanence;
         setModified();
     }
+
+    @Override
+    public String toString() {
+        return "Group{" +
+                "legacyId=" + legacyId +
+                ", permanent=" + permanent +
+                ", name='" + name + '\'' +
+                ", epeople=" + epeople +
+                ", groups=" + groups +
+                ", parentGroups=" + parentGroups +
+                ", supervisedItems=" + supervisedItems +
+                ", groupsChanged=" + groupsChanged +
+                '}';
+    }
 }

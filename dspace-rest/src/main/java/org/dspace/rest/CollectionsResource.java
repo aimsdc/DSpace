@@ -196,7 +196,7 @@ public class CollectionsResource extends Resource
                     collections.add(collection);
                     writeStats(dspaceCollection, UsageEvent.Action.VIEW, user_ip, user_agent,
                             xforwardedfor, headers, request, context);
-                }
+                } else log.debug("not authorised for collection - " + dspaceCollection.getName());
             }
             context.complete();
         }

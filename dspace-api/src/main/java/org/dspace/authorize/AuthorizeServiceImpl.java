@@ -9,6 +9,7 @@ package org.dspace.authorize;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.dspace.authorize.service.AuthorizeService;
 import org.dspace.authorize.service.ResourcePolicyService;
 import org.dspace.content.*;
@@ -44,6 +45,8 @@ import java.util.*;
  */
 public class AuthorizeServiceImpl implements AuthorizeService
 {
+    private static Logger log = Logger.getLogger(AuthorizeServiceImpl.class);
+
     @Autowired(required = true)
     protected BitstreamService bitstreamService;
     @Autowired(required = true)
@@ -154,9 +157,11 @@ public class AuthorizeServiceImpl implements AuthorizeService
                 actionText = Constants.actionText[action];
             }
 
-            throw new AuthorizeException("Authorization denied for action "
+            String msg = "Authorization denied for action "
                     + actionText + " on " + Constants.typeText[otype] + ":"
-                    + oid + " by user " + userid, o, action);
+                    + oid + " by user " + userid;
+            log.debug(msg);
+            throw new AuthorizeException(msg, o, action);
         }
     }
 
@@ -178,9 +183,11 @@ public class AuthorizeServiceImpl implements AuthorizeService
 
         try
         {
+            log.debug("Checking Authorization for dspace object - " + o.getID() + " - operation: " + a + " - useInheritance: " + useInheritance);
             authorizeAction(c, o, a, useInheritance);
         } catch (AuthorizeException e)
         {
+            log.debug("AuthorizeException for dspace object - " + o.getID());
             isAuthorized = false;
         }
 
@@ -293,6 +300,8 @@ public class AuthorizeServiceImpl implements AuthorizeService
 
         for (ResourcePolicy rp : getPoliciesActionFilter(c, o, action))
         {
+            log.debug("Checking Policy - type:" + rp.getRpType() + " - Person:" + rp.getEPerson()
+            + " - Group:" + rp.getGroup() + " - userToCheck:" + userToCheck);
 
             if (ignoreCustomPolicies
                     && ResourcePolicy.TYPE_CUSTOM.equals(rp.getRpType()))

@@ -418,4 +418,18 @@ public class EPerson extends DSpaceObject implements DSpaceObjectLegacySupport
         }
         return ePersonService;
     }
+
+    @Override
+    public String toString() {
+        return "EPerson{" +
+                "legacyId=" + legacyId +
+                ", netid='" + netid + '\'' +
+                ", lastActive=" + lastActive +
+                ", canLogIn=" + canLogIn +
+                ", email='" + email + '\'' +
+                ", selfRegistered=" + selfRegistered +
+                ", ePersonService=" + ePersonService +
+                ", groups=" + groups +
+                '}';
+    }
 }

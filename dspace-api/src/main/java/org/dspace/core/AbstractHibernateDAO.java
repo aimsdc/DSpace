@@ -8,6 +8,7 @@
 package org.dspace.core;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -27,6 +28,8 @@ import java.util.UUID;
  * @param <T> class type
  */
 public abstract class AbstractHibernateDAO<T> implements GenericDAO<T> {
+
+    protected static final Logger log = Logger.getLogger(AbstractHibernateDAO.class);
 
     protected AbstractHibernateDAO()
     {
@@ -114,6 +117,10 @@ public abstract class AbstractHibernateDAO<T> implements GenericDAO<T> {
 
     public Query createQuery(Context context, String query) throws SQLException {
         return getHibernateSession(context).createQuery(query);
+    }
+
+    public Query createNativeQuery(Context context, String query) throws SQLException {
+        return getHibernateSession(context).createSQLQuery(query);
     }
 
     public List<T> list(Criteria criteria)

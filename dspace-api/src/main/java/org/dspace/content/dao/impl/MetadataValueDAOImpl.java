@@ -74,8 +74,8 @@ public class MetadataValueDAOImpl extends AbstractHibernateDAO<MetadataValue> im
         log.info("db driver: " + dbDriver);
         Query query = null;
         if (dbDriver != null && dbDriver.contains("OracleDriver")) {
-            String queryString = "SELECT t0.METADATA_VALUE_ID, t0.AUTHORITY, t0.CONFIDENCE, t0.DSPACE_OBJECT_ID, t0.METADATA_FIELD_ID, t0.PLACE, t0.TEXT_LANG, t0.TEXT_VALUE \n" +
-                    "  FROM METADATAVALUE t0 \n" +
+            String queryString = "SELECT t0.METADATA_VALUE_ID, t0.AUTHORITY, t0.CONFIDENCE, t0.DSPACE_OBJECT_ID, t0.METADATA_FIELD_ID, t0.PLACE, t0.TEXT_LANG, t0.TEXT_VALUE" +
+                    "  FROM METADATAVALUE t0" +
                     "  WHERE (dbms_lob.substr(t0.text_value, 4000 , 1) = (SELECT MIN(dbms_lob.substr(t1.text_value, 4000 , 1)) FROM METADATAVALUE t1 WHERE (t1.METADATA_FIELD_ID = :metadata_field_id)))";
             query = createNativeQuery(context, queryString);
         } else {

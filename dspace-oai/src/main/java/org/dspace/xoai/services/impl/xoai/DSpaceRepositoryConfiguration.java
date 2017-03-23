@@ -96,7 +96,7 @@ public class DSpaceRepositoryConfiguration implements RepositoryConfiguration
         // Look at the database!
         try
         {
-            return dateResolver.getEarliestDate(context);
+            return dateResolver.getEarliestDate(context, getDbDriver());
         }
         catch (SQLException e)
         {
@@ -166,4 +166,8 @@ public class DSpaceRepositoryConfiguration implements RepositoryConfiguration
 		return result;
 	}
 
+    public String getDbDriver()
+    {
+        return configurationService.getProperty("db.driver");
+    }
 }

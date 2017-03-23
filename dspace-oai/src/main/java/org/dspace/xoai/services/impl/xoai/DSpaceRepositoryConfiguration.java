@@ -96,7 +96,7 @@ public class DSpaceRepositoryConfiguration implements RepositoryConfiguration
         // Look at the database!
         try
         {
-            return dateResolver.getEarliestDate(context, getDbDriver());
+            return dateResolver.getEarliestDate(context);
         }
         catch (SQLException e)
         {

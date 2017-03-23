@@ -111,8 +111,7 @@ public class MetadataValueServiceImpl implements MetadataValueService {
     public MetadataValue getMinimum(Context context, int metadataFieldId)
             throws SQLException
     {
-        return metadataValueDAO.getMinimum(context,
-                metadataFieldId);
+        return metadataValueDAO.getMinimum(context, metadataFieldId);
     }
 
     @Override

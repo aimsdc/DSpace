@@ -14,5 +14,5 @@ import java.sql.SQLException;
 import java.util.Date;
 
 public interface EarliestDateResolver {
-    public Date getEarliestDate (Context context, String dbDriver) throws InvalidMetadataFieldException, SQLException;
+    public Date getEarliestDate (Context context) throws InvalidMetadataFieldException, SQLException;
 }

@@ -29,14 +29,9 @@ public class DSpaceEarliestDateResolver implements EarliestDateResolver {
     private FieldResolver fieldResolver;
 
     @Override
-    public Date getEarliestDate(Context context, String dbDriver) throws InvalidMetadataFieldException, SQLException {
-        String query = "SELECT MIN(text_value) as value FROM metadatavalue WHERE metadata_field_id = ?";
-        if (dbDriver != null && dbDriver.contains("OracleDriver"))
-            query = "SELECT MIN(dbms_lob.substr(text_value, 4000 , 1)) as value FROM metadatavalue WHERE metadata_field_id = ?";
-
+    public Date getEarliestDate(Context context) throws InvalidMetadataFieldException, SQLException {
         MetadataValueService metadataValueService = ContentServiceFactory.getInstance().getMetadataValueService();
-        MetadataValue minimum = metadataValueService.getMinimum(context,
-                fieldResolver.getFieldID(context, "dc.date.issued"));
+        MetadataValue minimum = metadataValueService.getMinimum(context, fieldResolver.getFieldID(context, "dc.date.issued"));
         if (null != minimum)
         {
             String str = minimum.getValue();

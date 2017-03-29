@@ -7,6 +7,7 @@
  */
 package org.dspace.xoai.services.impl;
 
+import org.apache.log4j.Logger;
 import org.dspace.content.Collection;
 import org.dspace.content.Community;
 import org.dspace.content.Item;
@@ -26,6 +27,8 @@ import org.dspace.content.service.CommunityService;
 
 public class DSpaceCollectionsService implements CollectionsService {
 
+    private static final Logger log = Logger.getLogger(DSpaceCollectionsService.class);
+
     private static final CommunityService communityService
             = ContentServiceFactory.getInstance().getCommunityService();
 
@@ -38,6 +41,7 @@ public class DSpaceCollectionsService implements CollectionsService {
         try {
             comqueue.add(communityService.find(contextService.getContext(), communityId));
         } catch (ContextServiceException e) {
+            log.info("Exception adding to community queue - " + e.getMessage(), e);
             throw new SQLException(e);
         }
         while (!comqueue.isEmpty())
@@ -49,6 +53,7 @@ public class DSpaceCollectionsService implements CollectionsService {
                 if (!list.contains(col.getID()))
                     list.add(col.getID());
         }
+        log.info("Uuid list for community:" + communityId + " size:" + list.size());
         return list;
     }
 
@@ -70,7 +75,7 @@ public class DSpaceCollectionsService implements CollectionsService {
             if (!result.contains(p))
                 result.add(p);
         }
-
+        log.info("Parent Community list for collection:" + c.getID() + " size:" + result.size());
         return result;
     }
 
@@ -92,7 +97,7 @@ public class DSpaceCollectionsService implements CollectionsService {
             if (!result.contains(p))
                 result.add(p);
         }
-
+        log.info("Parent Community list for Community:" + c.getID() + " size:" + result.size());
         return result;
     }
 
@@ -115,7 +120,7 @@ public class DSpaceCollectionsService implements CollectionsService {
             if (!result.contains(p))
                 result.add(p);
         }
-
+        log.info("Parent Community list for Item:" + c.getID() + " size:" + result.size());
         return result;
     }
 }

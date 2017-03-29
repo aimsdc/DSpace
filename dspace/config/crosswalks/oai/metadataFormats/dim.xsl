@@ -54,44 +54,46 @@
         <xsl:param name="confidence"/>
         <xsl:param name="value"/>
 
-        <dim:field>
-            <xsl:attribute name="mdschema">
-                <xsl:value-of select="$mdschema"/>
-            </xsl:attribute>
-
-            <xsl:attribute name="element">
-                <xsl:value-of select="$element"/>
-            </xsl:attribute>
-
-            <xsl:if test="$qualifier">
-                <xsl:attribute name="qualifier">
-                    <xsl:value-of select="$qualifier"/>
+        <xsl:if test="$element != 'aims'">
+            <dim:field>
+                <xsl:attribute name="mdschema">
+                    <xsl:value-of select="$mdschema"/>
                 </xsl:attribute>
-            </xsl:if>
 
-            <xsl:choose>
-                <xsl:when test="$language='none'"/>
-                <xsl:otherwise>
-                    <xsl:attribute name="lang">
-                        <xsl:value-of select="$language"/>
+                <xsl:attribute name="element">
+                    <xsl:value-of select="$element"/>
+                </xsl:attribute>
+
+                <xsl:if test="$qualifier">
+                    <xsl:attribute name="qualifier">
+                        <xsl:value-of select="$qualifier"/>
                     </xsl:attribute>
-                </xsl:otherwise>
-            </xsl:choose>
+                </xsl:if>
 
-            <xsl:if test="$authority">
-                <xsl:attribute name="authority">
-                    <xsl:value-of select="$authority"/>
-                </xsl:attribute>
-            </xsl:if>
+                <xsl:choose>
+                    <xsl:when test="$language='none'"/>
+                    <xsl:otherwise>
+                        <xsl:attribute name="lang">
+                            <xsl:value-of select="$language"/>
+                        </xsl:attribute>
+                    </xsl:otherwise>
+                </xsl:choose>
 
-            <xsl:if test="$confidence">
-                <xsl:attribute name="confidence">
-                    <xsl:value-of select="$confidence"/>
-                </xsl:attribute>
-            </xsl:if>
+                <xsl:if test="$authority">
+                    <xsl:attribute name="authority">
+                        <xsl:value-of select="$authority"/>
+                    </xsl:attribute>
+                </xsl:if>
 
-            <xsl:value-of select="$value"/>
-        </dim:field>
+                <xsl:if test="$confidence">
+                    <xsl:attribute name="confidence">
+                        <xsl:value-of select="$confidence"/>
+                    </xsl:attribute>
+                </xsl:if>
+
+                <xsl:value-of select="$value"/>
+            </dim:field>
+        </xsl:if>
     </xsl:template>
 
 </xsl:stylesheet>

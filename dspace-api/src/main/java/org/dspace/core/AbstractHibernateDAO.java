@@ -119,8 +119,8 @@ public abstract class AbstractHibernateDAO<T> implements GenericDAO<T> {
         return getHibernateSession(context).createQuery(query);
     }
 
-    public Query createNativeQuery(Context context, String query) throws SQLException {
-        return getHibernateSession(context).createSQLQuery(query);
+    public Query createNativeQuery(Context context, String query, Class<?> entityClass) throws SQLException {
+        return getHibernateSession(context).createSQLQuery(query).addEntity(entityClass);
     }
 
     public List<T> list(Criteria criteria)

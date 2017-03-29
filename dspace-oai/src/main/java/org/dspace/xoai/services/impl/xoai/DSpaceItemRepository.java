@@ -15,6 +15,7 @@ import com.lyncode.xoai.dataprovider.filter.Scope;
 import com.lyncode.xoai.dataprovider.filter.ScopedFilter;
 import com.lyncode.xoai.dataprovider.filter.conditions.Condition;
 import com.lyncode.xoai.dataprovider.services.api.ItemRepository;
+import org.apache.log4j.Logger;
 import org.dspace.xoai.filter.DSpaceSetSpecFilter;
 import org.dspace.xoai.filter.DateFromFilter;
 import org.dspace.xoai.filter.DateUntilFilter;
@@ -30,6 +31,8 @@ import java.util.List;
  */
 public abstract class DSpaceItemRepository implements ItemRepository
 {
+    private static final Logger log = Logger.getLogger(DSpaceItemRepository.class);
+
     private CollectionsService collectionsService;
     private HandleResolver handleResolver;
 

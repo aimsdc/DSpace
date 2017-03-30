@@ -256,10 +256,10 @@ public class Group extends DSpaceObject implements DSpaceObjectLegacySupport
                 "legacyId=" + legacyId +
                 ", permanent=" + permanent +
                 ", name='" + name + '\'' +
-                ", epeople=" + epeople +
-                ", groups=" + groups +
-                ", parentGroups=" + parentGroups +
-                ", supervisedItems=" + supervisedItems +
+                ", epeople size=" + epeople.size() +
+                ", groups size=" + groups.size() +
+                ", parentGroups size=" + parentGroups.size() +
+                ", supervisedItems size=" + supervisedItems.size() +
                 ", groupsChanged=" + groupsChanged +
                 '}';
     }

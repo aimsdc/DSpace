@@ -429,7 +429,7 @@ public class EPerson extends DSpaceObject implements DSpaceObjectLegacySupport
                 ", email='" + email + '\'' +
                 ", selfRegistered=" + selfRegistered +
                 ", ePersonService=" + ePersonService +
-                ", groups=" + groups +
+                ", groups size=" + groups.size() +
                 '}';
     }
 }

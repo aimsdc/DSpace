@@ -215,6 +215,7 @@ public class OAIHarvester {
      */
 	public void runHarvest() throws SQLException, IOException, AuthorizeException
 	{
+		boolean listIdentifierMethod = true;
 		boolean originalMode = ourContext.isBatchModeEnabled();
 		ourContext.enableBatchMode(true);
 
@@ -300,98 +301,225 @@ public class OAIHarvester {
 			// main loop to keep requesting more objects until we're done
 			List<Element> records;
 			Set<String> errorSet = new HashSet<String>();
-
-			ListRecords listRecords = new ListRecords(oaiSource, fromDate, toDate, oaiSetId, descMDPrefix);
-			log.debug("Harvesting request parameters: listRecords " + oaiSource + " " + fromDate + " " + toDate + " " + oaiSetId + " " + descMDPrefix);
-			if (listRecords != null)
-            {
-                log.info("HTTP Request: " + listRecords.getRequestURL());
-            }
-
-			while (listRecords != null)
-			{
-				records = new ArrayList<Element>();
-				oaiResponse = db.build(listRecords.getDocument());
-
-				if (listRecords.getErrors() != null && listRecords.getErrors().getLength() > 0)
+			if (listIdentifierMethod) {
+				ListIdentifiers listIdentifiers = new ListIdentifiers(oaiSource, fromDate, toDate, oaiSetId, descMDPrefix);
+				log.debug("Harvesting request parameters: listIdentifiers " + oaiSource + " " + fromDate + " " + toDate + " " + oaiSetId + " " + descMDPrefix);
+				if (listIdentifiers != null)
 				{
-					for (int i=0; i<listRecords.getErrors().getLength(); i++)
-					{
-						String errorCode = listRecords.getErrors().item(i).getAttributes().getNamedItem("code").getTextContent();
-						errorSet.add(errorCode);
-					}
-					if (errorSet.contains("noRecordsMatch"))
-					{
-						log.info("noRecordsMatch: OAI server did not contain any updates");
-						harvestRow.setHarvestStartTime(new Date());
-						harvestRow.setHarvestMessage("OAI server did not contain any updates");
-						harvestRow.setHarvestStatus(HarvestedCollection.STATUS_READY);
-						harvestedCollection.update(ourContext, harvestRow);
-						return;
-					} else {
-						throw new HarvestingException(errorSet.toString());
-					}
+					log.info("ListIdentifiers HTTP Request: " + listIdentifiers.getRequestURL());
 				}
-				else
-				{
-					root = oaiResponse.getRootElement();
-					records.addAll(root.getChild("ListRecords", OAI_NS).getChildren("record", OAI_NS));
+				while (listIdentifiers != null) {
+					records = new ArrayList<Element>();
+					oaiResponse = db.build(listIdentifiers.getDocument());
 
-					Element resumptionElement = root.getChild("ListRecords", OAI_NS).getChild("resumptionToken", OAI_NS);
-					if(resumptionElement != null && resumptionElement.getAttribute("completeListSize") != null) {
-						String value = resumptionElement.getAttribute("completeListSize").getValue();
-						if(StringUtils.isNotBlank(value)) {
-							totalListSize = Long.parseLong(value);
+					if (listIdentifiers.getErrors() != null && listIdentifiers.getErrors().getLength() > 0)
+					{
+						for (int i=0; i<listIdentifiers.getErrors().getLength(); i++)
+						{
+							String errorCode = listIdentifiers.getErrors().item(i).getAttributes().getNamedItem("code").getTextContent();
+							errorSet.add(errorCode);
+						}
+						if (errorSet.contains("noRecordsMatch"))
+						{
+							log.info("noRecordsMatch: OAI server did not contain any updates");
+							harvestRow.setHarvestStartTime(new Date());
+							harvestRow.setHarvestMessage("OAI server did not contain any updates");
+							harvestRow.setHarvestStatus(HarvestedCollection.STATUS_READY);
+							harvestedCollection.update(ourContext, harvestRow);
+							return;
+						} else {
+							throw new HarvestingException(errorSet.toString());
 						}
 					}
-				}
+					else
+					{
+						root = oaiResponse.getRootElement();
+						List<Element> headerList = root.getChild("ListIdentifiers", OAI_NS).getChildren("header", OAI_NS);
+						for (Element header: headerList) {
+							String identifier = header.getChild("identifier", OAI_NS).getTextNormalize();
+							log.debug("Harvesting request parameters: getRecord " + oaiSource + " " + identifier + " " + descMDPrefix);
+							GetRecord getRecord = null;
+							try {
+								getRecord = new GetRecord(oaiSource, identifier, descMDPrefix);
+							} catch (Exception e) {
+								String errorCode = "Exception invoking getRecord " + oaiSource + " " + identifier + " " + descMDPrefix + " - " + e.getMessage();
+								log.error(errorCode);
+								errorSet.add(errorCode);
+								log.debug(e.getMessage(), e);
+							}
+							if (getRecord != null)
+							{
+								log.info("GetRecord HTTP Request: " + getRecord.getRequestURL());
+								Document grOaiResponse = db.build(getRecord.getDocument());
 
-				// Process the obtained records
-				if (records != null && records.size()>0)
-				{
-					log.info("Found " + records.size() + " records to process");
-					for (Element record : records) {
-						// check for STOP interrupt from the scheduler
-						if (HarvestScheduler.getInterrupt() == HarvestScheduler.HARVESTER_INTERRUPT_STOP)
-                        {
-                            throw new HarvestingException("Harvest process for " + targetCollection.getID() + " interrupted by stopping the scheduler.");
-                        }
-						// check for timeout
-						if (expirationTime.before(new Date()))
-                        {
-                            throw new HarvestingException("runHarvest method timed out for collection " + targetCollection.getID());
-                        }
+								if (getRecord.getErrors() != null && getRecord.getErrors().getLength() > 0)
+								{
+									for (int i=0; i<getRecord.getErrors().getLength(); i++)
+									{
+										String errorCode = getRecord.getErrors().item(i).getAttributes().getNamedItem("code").getTextContent();
+										errorSet.add(errorCode);
+									}
+									log.info("Errors fetching record with identifier:" + identifier + " - " + errorSet);
+								}
+								else
+								{
+									Element getRecordRoot = grOaiResponse.getRootElement();
+									records.add(getRecordRoot.getChild("GetRecord", OAI_NS).getChild("record", OAI_NS));
+								}
+							}
+						}
 
-						currentRecord++;
-
-						processRecord(record, OREPrefix, currentRecord, totalListSize);
-						ourContext.dispatchEvents();
-
-						intermediateCommit();
+						if (root.getChild("ListIdentifiers", OAI_NS) != null) {
+							Element resumptionElement = root.getChild("ListIdentifiers", OAI_NS).getChild("resumptionToken", OAI_NS);
+							if (resumptionElement != null && resumptionElement.getAttribute("completeListSize") != null) {
+								String value = resumptionElement.getAttribute("completeListSize").getValue();
+								if (StringUtils.isNotBlank(value)) {
+									totalListSize = Long.parseLong(value);
+								}
+							}
+						} else log.info("OAI Response missing ListIdentifiers element");
 					}
+
+					// Process the obtained records
+					if (records != null && records.size()>0)
+					{
+						log.info("Found " + records.size() + " records to process");
+						for (Element record : records) {
+							// check for STOP interrupt from the scheduler
+							if (HarvestScheduler.getInterrupt() == HarvestScheduler.HARVESTER_INTERRUPT_STOP)
+							{
+								throw new HarvestingException("Harvest process for " + targetCollection.getID() + " interrupted by stopping the scheduler.");
+							}
+							// check for timeout
+							if (expirationTime.before(new Date()))
+							{
+								throw new HarvestingException("runHarvest method timed out for collection " + targetCollection.getID());
+							}
+
+							currentRecord++;
+
+							processRecord(record, OREPrefix, currentRecord, totalListSize);
+							ourContext.dispatchEvents();
+
+							intermediateCommit();
+						}
+					}
+
+					// keep going if there are more records to process
+					resumptionToken = listIdentifiers.getResumptionToken();
+					if (resumptionToken == null || resumptionToken.length() == 0) {
+						listIdentifiers = null;
+					}
+					else {
+						listIdentifiers = new ListIdentifiers(oaiSource, resumptionToken);
+					}
+					ourContext.turnOffAuthorisationSystem();
+					try {
+						collectionService.update(ourContext, targetCollection);
+
+						harvestRow.setHarvestMessage(String.format("Collection is currently being harvested (item %d of %d)", currentRecord, totalListSize));
+						harvestedCollection.update(ourContext, harvestRow);
+					} finally {
+						//In case of an exception, make sure to restore our authentication state to the previous state
+						ourContext.restoreAuthSystemState();
+					}
+
+					ourContext.dispatchEvents();
+					intermediateCommit();
+				}
+			} else {
+				ListRecords listRecords = new ListRecords(oaiSource, fromDate, toDate, oaiSetId, descMDPrefix);
+				log.debug("Harvesting request parameters: listRecords " + oaiSource + " " + fromDate + " " + toDate + " " + oaiSetId + " " + descMDPrefix);
+				if (listRecords != null)
+				{
+					log.info("HTTP Request: " + listRecords.getRequestURL());
 				}
 
-				// keep going if there are more records to process
-				resumptionToken = listRecords.getResumptionToken();
-				if (resumptionToken == null || resumptionToken.length() == 0) {
-					listRecords = null;
-				}
-				else {
-					listRecords = new ListRecords(oaiSource, resumptionToken);
-				}
-                ourContext.turnOffAuthorisationSystem();
-                try {
-                    collectionService.update(ourContext, targetCollection);
+				while (listRecords != null)
+				{
+					records = new ArrayList<Element>();
+					oaiResponse = db.build(listRecords.getDocument());
 
-					harvestRow.setHarvestMessage(String.format("Collection is currently being harvested (item %d of %d)", currentRecord, totalListSize));
-					harvestedCollection.update(ourContext, harvestRow);
-                } finally {
-                    //In case of an exception, make sure to restore our authentication state to the previous state
-                    ourContext.restoreAuthSystemState();
-                }
+					if (listRecords.getErrors() != null && listRecords.getErrors().getLength() > 0)
+					{
+						for (int i=0; i<listRecords.getErrors().getLength(); i++)
+						{
+							String errorCode = listRecords.getErrors().item(i).getAttributes().getNamedItem("code").getTextContent();
+							errorSet.add(errorCode);
+						}
+						if (errorSet.contains("noRecordsMatch"))
+						{
+							log.info("noRecordsMatch: OAI server did not contain any updates");
+							harvestRow.setHarvestStartTime(new Date());
+							harvestRow.setHarvestMessage("OAI server did not contain any updates");
+							harvestRow.setHarvestStatus(HarvestedCollection.STATUS_READY);
+							harvestedCollection.update(ourContext, harvestRow);
+							return;
+						} else {
+							throw new HarvestingException(errorSet.toString());
+						}
+					}
+					else
+					{
+						root = oaiResponse.getRootElement();
+						records.addAll(root.getChild("ListRecords", OAI_NS).getChildren("record", OAI_NS));
 
-				ourContext.dispatchEvents();
-				intermediateCommit();
+						Element resumptionElement = root.getChild("ListRecords", OAI_NS).getChild("resumptionToken", OAI_NS);
+						if(resumptionElement != null && resumptionElement.getAttribute("completeListSize") != null) {
+							String value = resumptionElement.getAttribute("completeListSize").getValue();
+							if(StringUtils.isNotBlank(value)) {
+								totalListSize = Long.parseLong(value);
+							}
+						}
+					}
+
+					// Process the obtained records
+					if (records != null && records.size()>0)
+					{
+						log.info("Found " + records.size() + " records to process");
+						for (Element record : records) {
+							// check for STOP interrupt from the scheduler
+							if (HarvestScheduler.getInterrupt() == HarvestScheduler.HARVESTER_INTERRUPT_STOP)
+							{
+								throw new HarvestingException("Harvest process for " + targetCollection.getID() + " interrupted by stopping the scheduler.");
+							}
+							// check for timeout
+							if (expirationTime.before(new Date()))
+							{
+								throw new HarvestingException("runHarvest method timed out for collection " + targetCollection.getID());
+							}
+
+							currentRecord++;
+
+							processRecord(record, OREPrefix, currentRecord, totalListSize);
+							ourContext.dispatchEvents();
+
+							intermediateCommit();
+						}
+					}
+
+					// keep going if there are more records to process
+					resumptionToken = listRecords.getResumptionToken();
+					if (resumptionToken == null || resumptionToken.length() == 0) {
+						listRecords = null;
+					}
+					else {
+						listRecords = new ListRecords(oaiSource, resumptionToken);
+					}
+					ourContext.turnOffAuthorisationSystem();
+					try {
+						collectionService.update(ourContext, targetCollection);
+
+						harvestRow.setHarvestMessage(String.format("Collection is currently being harvested (item %d of %d)", currentRecord, totalListSize));
+						harvestedCollection.update(ourContext, harvestRow);
+					} finally {
+						//In case of an exception, make sure to restore our authentication state to the previous state
+						ourContext.restoreAuthSystemState();
+					}
+
+					ourContext.dispatchEvents();
+					intermediateCommit();
+				}
 			}
 		}
 		catch (HarvestingException hex) {

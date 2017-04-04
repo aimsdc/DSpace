@@ -630,6 +630,7 @@
         <scope_note>Web of Science Identifier</scope_note>
     </dc-type>
 
+    <!--
     <dc-type>
         <schema>dc</schema>
         <element>aims</element>
@@ -650,8 +651,9 @@
         <qualifier>mesturi</qualifier>
         <scope_note>Link to Internal Metadata Catalogue, stripped on harvest</scope_note>
     </dc-type>
+    -->
 
-    <!-- remaining extensions still defined to enable error free migration, they are redundant moving forward -->
+    <!-- remaining extensions still defined to enable error free migration, they are redundant moving forward
 
     <dc-type>
         <schema>dc</schema>
@@ -762,5 +764,6 @@
         <qualifier>mesturi</qualifier>
         <scope_note>Link to Internal Metadata Catalogue, stripped on harvest</scope_note>
     </dc-type>
+    -->
 
 </dspace-dc-types>

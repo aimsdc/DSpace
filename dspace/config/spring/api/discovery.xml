@@ -98,7 +98,8 @@
                 <ref bean="searchFilterSubject" />
                 <ref bean="searchFilterIssued" />
                 <ref bean="searchFilterContentInOriginalBundle"/>
-                <ref bean="searchFilterTaskCode" />
+                <ref bean="searchFilterAbstract" />
+                <!--<ref bean="searchFilterTaskCode" />-->
             </list>
         </property>
         <!-- Set TagCloud configuration per discovery configuration -->
@@ -111,7 +112,8 @@
                 <ref bean="searchFilterSubject" />
                 <ref bean="searchFilterIssued" />
                 <ref bean="searchFilterContentInOriginalBundle"/>
-                <ref bean="searchFilterTaskCode" />
+                <ref bean="searchFilterAbstract" />
+                <!--<ref bean="searchFilterTaskCode" />-->
             </list>
         </property>
         <!--The sort filters for the discovery search-->
@@ -125,7 +127,7 @@
                         <ref bean="sortTitle" />
                         <ref bean="sortDateIssued" />
                         <ref bean="sortCitation" />
-                        <ref bean="sortTaskCode" />
+                        <!--<ref bean="sortTaskCode" />-->
                     </list>
                 </property>
             </bean>
@@ -383,6 +385,19 @@
         </property>
     </bean>
 
+    <bean id="searchFilterAbstract" class="org.dspace.discovery.configuration.DiscoverySearchFilterFacet">
+        <property name="indexFieldName" value="abstract"/>
+        <property name="metadataFields">
+            <list>
+                <value>dc.description.abstract</value>
+            </list>
+        </property>
+        <property name="type" value="text"/>
+        <property name="sortOrderSidebar" value="COUNT"/>
+        <property name="sortOrderFilterPage" value="COUNT"/>
+    </bean>
+
+    <!--
     <bean id="searchFilterTaskCode" class="org.dspace.discovery.configuration.DiscoverySearchFilterFacet">
         <property name="indexFieldName" value="taskcode"/>
         <property name="metadataFields">
@@ -394,6 +409,7 @@
         <property name="sortOrderSidebar" value="COUNT"/>
         <property name="sortOrderFilterPage" value="COUNT"/>
     </bean>
+    -->
 
     <bean id="searchFilterCitation" class="org.dspace.discovery.configuration.DiscoverySearchFilterFacet">
         <property name="indexFieldName" value="citation"/>
@@ -412,7 +428,7 @@
         <property name="metadataFields">
             <list>
                 <value>dc.contributor.author</value>
-                <value>dc.creator</value>
+                <!--<value>dc.creator</value>-->
             </list>
         </property>
         <property name="facetLimit" value="10"/>
@@ -471,9 +487,9 @@
         <property name="type" value="text"/>
     </bean>
 
-    <bean id="sortTaskCode" class="org.dspace.discovery.configuration.DiscoverySortFieldConfiguration">
+    <!--<bean id="sortTaskCode" class="org.dspace.discovery.configuration.DiscoverySortFieldConfiguration">
         <property name="metadataField" value="dc.aims.taskcode"/>
         <property name="type" value="text"/>
-    </bean>
+    </bean>-->
 
 </beans>

@@ -159,8 +159,12 @@
         <!-- <theme name="Test Theme 1" handle="123456789/1" path="theme1/"/>    -->
         <!-- <theme name="Test Theme 2" regex="community-list" path="theme2/"/> -->
 
-        <!-- Mirage theme, @mire contributed theme, default since DSpace 3.0 -->
+        <!-- Mirage theme, @mire contributed theme, default since DSpace 3.0
         <theme name="Atmire Mirage Theme" regex=".*" path="Mirage/" />
+        -->
+
+        <!-- AIMS Mirage theme, minor mods to Mirage theme -->
+        <theme name="AIMS Mirage Theme" regex=".*" path="AIMS-Mirage/" />
 
         <!-- Reference theme, the default Manakin XMLUI layout up to DSpace 1.8 -->
         <!-- <theme name="Default Reference Theme" regex=".*" path="Reference/" /> -->

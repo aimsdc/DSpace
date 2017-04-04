@@ -91,24 +91,26 @@ public class WorkspaceItemServiceImpl implements WorkspaceItemService {
 
         // Create an item
         Item item = itemService.create(context, workspaceItem);
-        item.setSubmitter(context.getCurrentUser());
+        // if we have a person set up authorisation policies
+        if (context.getCurrentUser() != null) {
+            item.setSubmitter(context.getCurrentUser());
 
-        // Now create the policies for the submitter and workflow
-        // users to modify item and contents
-        // contents = bitstreams, bundles
-        // FIXME: icky hardcoded workflow steps
-        workflowService.addInitialWorkspaceItemPolicies(context, workspaceItem);
-        // read permission
-        authorizeService.addPolicy(context, item, Constants.READ, item.getSubmitter(), ResourcePolicy.TYPE_SUBMISSION);
-        // write permission
-        authorizeService.addPolicy(context, item, Constants.WRITE, item.getSubmitter(), ResourcePolicy.TYPE_SUBMISSION);
-        // add permission
-        authorizeService.addPolicy(context, item, Constants.ADD, item.getSubmitter(), ResourcePolicy.TYPE_SUBMISSION);
-        // remove contents permission
-        authorizeService.addPolicy(context, item, Constants.REMOVE, item.getSubmitter(), ResourcePolicy.TYPE_SUBMISSION);
-        // delete permission
-        authorizeService.addPolicy(context, item, Constants.DELETE, item.getSubmitter(), ResourcePolicy.TYPE_SUBMISSION);
-
+            // Now create the policies for the submitter and workflow
+            // users to modify item and contents
+            // contents = bitstreams, bundles
+            // only doing it if a person has been provided, might be background harvest
+            workflowService.addInitialWorkspaceItemPolicies(context, workspaceItem);
+            // read permission
+            authorizeService.addPolicy(context, item, Constants.READ, item.getSubmitter(), ResourcePolicy.TYPE_SUBMISSION);
+            // write permission
+            authorizeService.addPolicy(context, item, Constants.WRITE, item.getSubmitter(), ResourcePolicy.TYPE_SUBMISSION);
+            // add permission
+            authorizeService.addPolicy(context, item, Constants.ADD, item.getSubmitter(), ResourcePolicy.TYPE_SUBMISSION);
+            // remove contents permission
+            authorizeService.addPolicy(context, item, Constants.REMOVE, item.getSubmitter(), ResourcePolicy.TYPE_SUBMISSION);
+            // delete permission
+            authorizeService.addPolicy(context, item, Constants.DELETE, item.getSubmitter(), ResourcePolicy.TYPE_SUBMISSION);
+        }
 
         // Copy template if appropriate
         Item templateItem = collection.getTemplateItem();

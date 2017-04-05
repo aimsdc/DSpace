@@ -175,25 +175,25 @@ public class Navigation extends AbstractDSpaceTransformer implements CacheablePr
     	/* Create skeleton menu structure to ensure consistent order between aspects,
     	 * even if they are never used 
     	 */
+    	Boolean hideLogin = DSpaceServicesFactory.getInstance().getConfigurationService().getBooleanProperty("xmlui.hide.login", false);
         options.addList("browse");
-        List account = options.addList("account");
+        List account = null;
+        if (!hideLogin) account = options.addList("account");
         options.addList("context");
         options.addList("administrative");
-        
-        account.setHead(T_my_account);
-        EPerson eperson = this.context.getCurrentUser();
-        if (eperson != null)
-        {
-            String fullName = eperson.getFullName();
-            account.addItemXref(contextPath+"/logout",T_logout);
-            account.addItemXref(contextPath+"/profile",T_profile.parameterize(fullName));
-        } 
-        else 
-        {
-            account.addItemXref(contextPath+"/login",T_login);
-            if (DSpaceServicesFactory.getInstance().getConfigurationService().getBooleanProperty("xmlui.user.registration", true))
-            {
-                account.addItemXref(contextPath + "/register", T_register);
+
+        if (account != null) {
+            account.setHead(T_my_account);
+            EPerson eperson = this.context.getCurrentUser();
+            if (eperson != null) {
+                String fullName = eperson.getFullName();
+                account.addItemXref(contextPath + "/logout", T_logout);
+                account.addItemXref(contextPath + "/profile", T_profile.parameterize(fullName));
+            } else {
+                account.addItemXref(contextPath + "/login", T_login);
+                if (DSpaceServicesFactory.getInstance().getConfigurationService().getBooleanProperty("xmlui.user.registration", true)) {
+                    account.addItemXref(contextPath + "/register", T_register);
+                }
             }
         }
     }

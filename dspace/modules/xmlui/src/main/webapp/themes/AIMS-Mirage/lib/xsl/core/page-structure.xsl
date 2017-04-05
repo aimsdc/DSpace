@@ -407,6 +407,8 @@
                         </div>
                     </xsl:when>
                     <xsl:otherwise>
+                        <!--
+                        -->
                         <div id="ds-user-box">
                             <p>
                                 <a>

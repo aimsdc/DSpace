@@ -98,8 +98,10 @@
                 <ref bean="searchFilterSubject" />
                 <ref bean="searchFilterIssued" />
                 <ref bean="searchFilterContentInOriginalBundle"/>
+                <!--
                 <ref bean="searchFilterAbstract" />
-                <!--<ref bean="searchFilterTaskCode" />-->
+                <ref bean="searchFilterTaskCode" />
+                -->
             </list>
         </property>
         <!-- Set TagCloud configuration per discovery configuration -->
@@ -112,8 +114,10 @@
                 <ref bean="searchFilterSubject" />
                 <ref bean="searchFilterIssued" />
                 <ref bean="searchFilterContentInOriginalBundle"/>
+                <!--
                 <ref bean="searchFilterAbstract" />
-                <!--<ref bean="searchFilterTaskCode" />-->
+                <ref bean="searchFilterTaskCode" />
+                -->
             </list>
         </property>
         <!--The sort filters for the discovery search-->
@@ -212,8 +216,10 @@
                 <ref bean="searchFilterIssued" />
                 <ref bean="searchFilterContentInOriginalBundle"/>
                 <ref bean="searchFilterCitation" />
+                <!--
                 <ref bean="searchFilterAbstract" />
-                <!--<ref bean="searchFilterTaskCode" />-->
+                <ref bean="searchFilterTaskCode" />
+                -->
             </list>
         </property>
         <!-- Set TagCloud configuration per discovery configuration -->
@@ -227,8 +233,10 @@
                 <ref bean="searchFilterIssued" />
                 <ref bean="searchFilterContentInOriginalBundle"/>
                 <ref bean="searchFilterCitation" />
+                <!--
                 <ref bean="searchFilterAbstract" />
-                <!--<ref bean="searchFilterTaskCode" />-->
+                <ref bean="searchFilterTaskCode" />
+                -->
             </list>
         </property>
         <!--The sort filters for the discovery search (same as defaultConfiguration above)-->
@@ -387,6 +395,7 @@
         </property>
     </bean>
 
+    <!--
     <bean id="searchFilterAbstract" class="org.dspace.discovery.configuration.DiscoverySearchFilterFacet">
         <property name="indexFieldName" value="abstract"/>
         <property name="metadataFields">
@@ -399,7 +408,6 @@
         <property name="sortOrderFilterPage" value="COUNT"/>
     </bean>
 
-    <!--
     <bean id="searchFilterTaskCode" class="org.dspace.discovery.configuration.DiscoverySearchFilterFacet">
         <property name="indexFieldName" value="taskcode"/>
         <property name="metadataFields">

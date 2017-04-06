@@ -788,18 +788,24 @@ public class OAIHarvester {
     		{
     			//     0   1       2         3   4
     			//   http://hdl.handle.net/1234/12
+				//   i want the harvest to preserver handles if i include the dspace server, it has a /handle/ in it
+				//     0   1       2             3     4    5
+				//   http://<my dspace server>/handle/1234/12
     			String[] urlPieces = value.getValue().split("/");
-    			if (urlPieces.length != 5)
+    			if (urlPieces.length != 5 || urlPieces.length != 6)
                 {
                     continue;
                 }
 
     			for (String server : acceptedHandleServers) {
     				if (urlPieces[2].equals(server)) {
+    					int handlePrefixIndex = (urlPieces.length == 5) ? 3 : 4;
     					for (String prefix : rejectedHandlePrefixes) {
-    						if (!urlPieces[3].equals(prefix))
+    						if (!urlPieces[handlePrefixIndex].equals(prefix))
                             {
-                                return urlPieces[3] + "/" + urlPieces[4];
+                            	String handle = urlPieces[handlePrefixIndex] + "/" + urlPieces[handlePrefixIndex+1];
+                            	log.info("Extracted handle: " + handle);
+                                return handle;
                             }
     					}
 

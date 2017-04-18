@@ -768,19 +768,25 @@ public class OAIHarvester {
      */
     protected String extractHandle(Item item)
     {
+		String configuredHandlePrefix = configurationService.getProperty("handle.prefix");
+		log.debug("configuredHandlePrefix: " + configuredHandlePrefix);
+		Boolean keepExistingHandles = configurationService.getBooleanProperty("oai.harvester.keepExistingHandles", false);
+		log.debug("keepExistingHandles: " + keepExistingHandles);
     	String[] acceptedHandleServers = configurationService.getArrayProperty("oai.harvester.acceptedHandleServer");
     	if (acceptedHandleServers == null)
         {
             acceptedHandleServers = new String[]{"hdl.handle.net"};
         }
+        log.debug("acceptedHandleServers: " + Arrays.asList(acceptedHandleServers).toString());
 
     	String[] rejectedHandlePrefixes = configurationService.getArrayProperty("oai.harvester.rejectedHandlePrefix");
     	if (rejectedHandlePrefixes == null)
         {
             rejectedHandlePrefixes = new String[]{"123456789"};
         }
+		log.debug("rejectedHandlePrefixes: " + Arrays.asList(rejectedHandlePrefixes).toString());
 
-    	List<MetadataValue> values = itemService.getMetadata(item, "dc", "identifier", Item.ANY, Item.ANY);
+    	List<MetadataValue> values = itemService.getMetadata(item, "dc", "identifier", "uri", Item.ANY);
 
     	if (values.size() > 0 && acceptedHandleServers != null)
     	{
@@ -788,31 +794,50 @@ public class OAIHarvester {
     		{
     			//     0   1       2         3   4
     			//   http://hdl.handle.net/1234/12
+				//
 				//   i want the harvest to preserver handles if i include the dspace server, it has a /handle/ in it
 				//     0   1       2             3     4    5
 				//   http://<my dspace server>/handle/1234/12
+                //     0   1       2                   3     4    5    6
+                //   http://<my dspace server>:port/xmlui/handle/1234/12
+				//
+				//   next one is error case we must check for
+				//     0   1       2                  3      4  5
+				//   http://www.biomedcentral.com/1471-2156/14/9
     			String[] urlPieces = value.getValue().split("/");
-    			if (urlPieces.length != 5 || urlPieces.length != 6)
+    			if (urlPieces.length >= 5 && urlPieces.length <= 7)
                 {
-                    continue;
-                }
-
-    			for (String server : acceptedHandleServers) {
-    				if (urlPieces[2].equals(server)) {
-    					int handlePrefixIndex = (urlPieces.length == 5) ? 3 : 4;
-    					for (String prefix : rejectedHandlePrefixes) {
-    						if (!urlPieces[handlePrefixIndex].equals(prefix))
-                            {
-                            	String handle = urlPieces[handlePrefixIndex] + "/" + urlPieces[handlePrefixIndex+1];
-                            	log.info("Extracted handle: " + handle);
-                                return handle;
-                            }
-    					}
-
-    				}
-    			}
+                	if ((urlPieces.length == 6 && !urlPieces[3].equals("handle")) ||
+							(urlPieces.length == 7 && !urlPieces[4].equals("handle"))) {
+						// must contain the path /handle/ to be valid for getting a handle
+						log.info("Ignoring as it does not contain the path ../handle/..");
+						continue;
+					}
+					for (String server : acceptedHandleServers) {
+						String givenServer = urlPieces[2];
+						if (givenServer.equals(server) || keepExistingHandles) {
+							int handlePrefixIndex = (urlPieces.length == 5) ? 3 : (urlPieces.length == 6) ? 4 : 5;
+							String thisHandlePrefix = urlPieces[handlePrefixIndex];
+							String handle = thisHandlePrefix + "/" + urlPieces[handlePrefixIndex+1];
+							if (thisHandlePrefix.equals(configuredHandlePrefix) ||
+									rejectedHandlePrefixes == null || rejectedHandlePrefixes.length == 0) {
+								log.info("Extracted handle: " + handle);
+								return handle;
+							} else {
+								for (String prefix : rejectedHandlePrefixes) {
+									if (!thisHandlePrefix.equals(prefix)) {
+										log.info("Extracted handle: " + handle);
+										return handle;
+									} else log.info("This is a rejected handle prefix: " + thisHandlePrefix);
+								}
+							}
+						} else log.debug("Given Server: " + givenServer + " does not match accepted handle server " + server);
+					}
+                } else {
+					log.debug("Not the right no of url pieces - found " + urlPieces.length + " pieces in identifier - " + value.getValue());
+				}
     		}
-    	}
+    	} else log.debug("Can't find existing handle, dc.identifier.uri size: " + values.size() + " - acceptedHandleServers: " + acceptedHandleServers);
 
     	return null;
     }

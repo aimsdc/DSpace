@@ -226,7 +226,7 @@ public class HandleServiceImpl implements HandleService
         {
             for (Handle handle: handles)
             {
-                //Only set the "resouce_id" column to null when unbinding a handle.
+                //Only set the "resource_id" column to null when unbinding a handle.
                 // We want to keep around the "resource_type_id" value, so that we
                 // can verify during a restore whether the same *type* of resource
                 // is reusing this handle!

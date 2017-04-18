@@ -48,6 +48,11 @@ public abstract class AbstractHibernateDAO<T> implements GenericDAO<T> {
     }
 
     protected Session getHibernateSession(Context context) throws SQLException {
+        if (context == null) {
+            log.warn("Null context, can't get hibernate session!!");
+        } else if (context.getDBConnection() == null) {
+            log.warn("Null DB Connection, can't get hibernate session!!");
+        }
         return ((Session) context.getDBConnection().getSession());
     }
 

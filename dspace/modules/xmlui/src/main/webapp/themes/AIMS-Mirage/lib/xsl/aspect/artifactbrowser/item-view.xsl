@@ -278,8 +278,7 @@
             </xsl:when>
 
             <!-- Abstract row -->
-            <xsl:when
-                    test="$clause = 6 and (dim:field[@element='description' and @qualifier='abstract' and descendant::text()])">
+            <xsl:when test="$clause = 6 and (dim:field[@element='description' and @qualifier='abstract' and descendant::text()])">
                 <div class="simple-item-view-description">
                     <h3><i18n:text>xmlui.dri2xhtml.METS-1.0.item-abstract</i18n:text>:
                     </h3>
@@ -312,8 +311,7 @@
             </xsl:when>
 
             <!-- Description row -->
-            <xsl:when
-                    test="$clause = 7 and (dim:field[@element='description' and not(@qualifier) and descendant::text()])">
+            <xsl:when test="$clause = 7 and (dim:field[@element='description' and not(@qualifier) and descendant::text()])">
                 <div class="simple-item-view-description">
                     <h3 class="bold"><i18n:text>xmlui.dri2xhtml.METS-1.0.item-description</i18n:text>:
                     </h3>
@@ -338,7 +336,33 @@
                 </xsl:call-template>
             </xsl:when>
 
-            <xsl:when test="$clause = 8 and $ds_item_view_toggle_url != ''">
+            <!-- relation uri row -->
+            <xsl:when test="$clause = 8 and (dim:field[@element='relation' and @qualifier='uri' and descendant::text()])">
+                <div class="simple-item-view-other">
+                    <span class="bold"><i18n:text>xmlui.dri2xhtml.METS-1.0.item-related</i18n:text>:</span>
+                    <span>
+                        <xsl:if test="count(dim:field[@element='relation' and @qualifier='uri']) &gt; 1"><br/></xsl:if>
+                        <xsl:for-each select="dim:field[@element='relation' and @qualifier='uri']">
+                            <a>
+                                <xsl:attribute name="href">
+                                    <xsl:copy-of select="./node()"/>
+                                </xsl:attribute>
+                                <xsl:attribute name="target">_blank</xsl:attribute>
+                                <xsl:copy-of select="./node()"/>
+                            </a>
+                            <xsl:if test="count(following-sibling::dim:field[@element='relation' and @qualifier='uri']) != 0">
+                                <br/>
+                            </xsl:if>
+                        </xsl:for-each>
+                    </span>
+                </div>
+                <xsl:call-template name="itemSummaryView-DIM-fields">
+                    <xsl:with-param name="clause" select="($clause + 1)"/>
+                    <xsl:with-param name="phase" select="$otherPhase"/>
+                </xsl:call-template>
+            </xsl:when>
+
+            <xsl:when test="$clause = 9 and $ds_item_view_toggle_url != ''">
                 <p class="ds-paragraph item-view-toggle item-view-toggle-bottom">
                     <a>
                         <xsl:attribute name="href">
@@ -396,7 +420,17 @@
                 </xsl:if>
             </td>
             <td>
-                <xsl:copy-of select="./node()"/>
+                <xsl:choose>
+                    <xsl:when test="./@qualifier and ./@qualifier='uri'">
+                        <a>
+                            <xsl:attribute name="href">
+                                <xsl:copy-of select="./node()"/>
+                            </xsl:attribute>
+                            <xsl:copy-of select="./node()"/>
+                        </a>
+                    </xsl:when>
+                    <xsl:otherwise><xsl:copy-of select="./node()"/></xsl:otherwise>
+                </xsl:choose>
                 <xsl:if test="./@authority and ./@confidence">
                     <xsl:call-template name="authorityConfidenceIcon">
                         <xsl:with-param name="confidence" select="./@confidence"/>

@@ -711,6 +711,13 @@
 	<message key="xmlui.Submission.Submissions.workflow_head3">Tasks in the pool</message>
 	<message key="xmlui.Submission.Submissions.workflow_submit_take">Take selected tasks</message>
 	<message key="xmlui.Submission.Submissions.workflow_info3">No tasks are in the pool</message>
+
+	<!-- messages missing after custom workflow configuration -->
+	<message key="xmlui.XMLWorkflow.editthenfinaledit.editstep.claimaction">Claim Initial Edit</message>
+	<message key="xmlui.XMLWorkflow.editthenfinaledit.editstep.editaction">Initial Edit</message>
+	<message key="xmlui.XMLWorkflow.editthenfinaledit.finaleditstep.claimaction">Claim Final Edit</message>
+	<message key="xmlui.XMLWorkflow.editthenfinaledit.finaleditstep.finaleditaction">Final Edit</message>
+
 	<!-- Same transformer, submissions section -->
 	<message key="xmlui.Submission.Submissions.submit_head1">Submissions</message>
 	<message key="xmlui.Submission.Submissions.submit_info1a">You may </message>

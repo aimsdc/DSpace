@@ -114,6 +114,8 @@
 	<message key="xmlui.ArtifactBrowser.AdvancedSearch.type_department">Department</message>
 	<message key="xmlui.ArtifactBrowser.AdvancedSearch.type_taskcode">TaskCode</message>
 	<message key="xmlui.ArtifactBrowser.AdvancedSearch.type_citation">Citation</message>
+	<message key="xmlui.ArtifactBrowser.AdvancedSearch.type_type">Type</message>
+	<message key="xmlui.ArtifactBrowser.AdvancedSearch.type_program">Program</message>
 
 	<message key="xmlui.ArtifactBrowser.AdvancedSearch.type_ANY">Full Text</message>
 
@@ -138,6 +140,8 @@
 	<message key="xmlui.ArtifactBrowser.ConfigurableBrowse.sort_by.dateaccessioned">submit date</message>
 	<message key="xmlui.ArtifactBrowser.ConfigurableBrowse.sort_by.citation">Citation</message>
 	<message key="xmlui.ArtifactBrowser.ConfigurableBrowse.sort_by.taskcode">TaskCode</message>
+	<message key="xmlui.ArtifactBrowser.ConfigurableBrowse.sort_by.type">Type</message>
+	<message key="xmlui.ArtifactBrowser.ConfigurableBrowse.sort_by.program">Program</message>
 
 	<message key="xmlui.ArtifactBrowser.ConfigurableBrowse.order.asc">ascending</message>
 	<message key="xmlui.ArtifactBrowser.ConfigurableBrowse.order.desc">descending</message>
@@ -146,6 +150,8 @@
 	<message key="xmlui.ArtifactBrowser.ConfigurableBrowse.subject.column_heading">Subject</message>
 	<message key="xmlui.ArtifactBrowser.ConfigurableBrowse.citation.column_heading">Citation</message>
 	<message key="xmlui.ArtifactBrowser.ConfigurableBrowse.taskcode.column_heading">TaskCode</message>
+	<message key="xmlui.ArtifactBrowser.ConfigurableBrowse.type.column_heading">Type</message>
+	<message key="xmlui.ArtifactBrowser.ConfigurableBrowse.program.column_heading">Program</message>
 
 	<message key="xmlui.ArtifactBrowser.ConfigurableBrowse.title.metadata.author">Browsing {0} by Author {1}</message>
 	<message key="xmlui.ArtifactBrowser.ConfigurableBrowse.trail.metadata.author">Browsing {0} by Author</message>
@@ -158,6 +164,12 @@
 
 	<message key="xmlui.ArtifactBrowser.ConfigurableBrowse.title.metadata.taskcode">Browsing {0} by TaskCode {1}</message>
 	<message key="xmlui.ArtifactBrowser.ConfigurableBrowse.trail.metadata.taskcode">Browsing {0} by TaskCode</message>
+
+	<message key="xmlui.ArtifactBrowser.ConfigurableBrowse.title.metadata.type">Browsing {0} by Type {1}</message>
+	<message key="xmlui.ArtifactBrowser.ConfigurableBrowse.trail.metadata.type">Browsing {0} by Type</message>
+
+	<message key="xmlui.ArtifactBrowser.ConfigurableBrowse.title.metadata.program">Browsing {0} by Program {1}</message>
+	<message key="xmlui.ArtifactBrowser.ConfigurableBrowse.trail.metadata.program">Browsing {0} by Program</message>
 
 	<message key="xmlui.ArtifactBrowser.ConfigurableBrowse.title.item.title">Browsing {0} by Title {1}</message>
 	<message key="xmlui.ArtifactBrowser.ConfigurableBrowse.trail.item.title">Browsing {0} by Title</message>
@@ -185,6 +197,12 @@
 	<message key="xmlui.Administrative.WithdrawnItems.title.item.taskcode">Withdrawn Items by TaskCode</message>
 	<message key="xmlui.Administrative.WithdrawnItems.trail.item.taskcode">Withdrawn Items by TaskCode</message>
 
+	<message key="xmlui.Administrative.WithdrawnItems.title.item.type">Withdrawn Items by Type</message>
+	<message key="xmlui.Administrative.WithdrawnItems.trail.item.type">Withdrawn Items by Type</message>
+
+	<message key="xmlui.Administrative.WithdrawnItems.title.item.program">Withdrawn Items by Program</message>
+	<message key="xmlui.Administrative.WithdrawnItems.trail.item.program">Withdrawn Items by Program</message>
+
 	<!-- org.dspace.app.xmlui.administrative.PrivateItems.java -->
 	<message key="xmlui.Administrative.PrivateItems.title.item.title">Private Items by Title</message>
 	<message key="xmlui.Administrative.PrivateItems.trail.item.title">Private Items by Title</message>
@@ -201,6 +219,12 @@
 	<message key="xmlui.Administrative.PrivateItems.title.item.taskcode">Private Items by TaskCode</message>
 	<message key="xmlui.Administrative.PrivateItems.trail.item.taskcode">Private Items by TaskCode</message>
 
+	<message key="xmlui.Administrative.PrivateItems.title.item.type">Private Items by Type</message>
+	<message key="xmlui.Administrative.PrivateItems.trail.item.type">Private Items by Type</message>
+
+	<message key="xmlui.Administrative.PrivateItems.title.item.program">Private Items by Program</message>
+	<message key="xmlui.Administrative.PrivateItems.trail.item.program">Private Items by Program</message>
+
 	<!-- org.dspace.app.xmlui.artifactbrowser.CollectionViewer.java -->
 	<message key="xmlui.ArtifactBrowser.CollectionViewer.search_scope">Search Scope</message>
 	<message key="xmlui.ArtifactBrowser.CollectionViewer.all_of_dspace">All Publications</message>
@@ -211,6 +235,8 @@
 	<message key="xmlui.ArtifactBrowser.CollectionViewer.browse_dates">Dates</message>
 	<message key="xmlui.ArtifactBrowser.CollectionViewer.browse_citations">Citations</message>
 	<message key="xmlui.ArtifactBrowser.CollectionViewer.browse_taskcodes">TaskCodes</message>
+	<message key="xmlui.ArtifactBrowser.CollectionViewer.browse_types">Types</message>
+	<message key="xmlui.ArtifactBrowser.CollectionViewer.browse_programs">Programs</message>
 	<message key="xmlui.ArtifactBrowser.CollectionViewer.advanced_search_link">Advanced Search</message>
 	<message key="xmlui.ArtifactBrowser.CollectionViewer.head_recent_submissions">Recent Submissions</message>
 
@@ -230,6 +256,8 @@
 	<message key="xmlui.ArtifactBrowser.CommunityViewer.browse_dates">Dates</message>
 	<message key="xmlui.ArtifactBrowser.CommunityViewer.browse_citations">Citations</message>
 	<message key="xmlui.ArtifactBrowser.CommunityViewer.browse_taskcodes">TaskCodes</message>
+	<message key="xmlui.ArtifactBrowser.CommunityViewer.browse_types">Types</message>
+	<message key="xmlui.ArtifactBrowser.CommunityViewer.browse_programs">Programs</message>
 	<message key="xmlui.ArtifactBrowser.CommunityViewer.advanced_search_link">Advanced Search</message>
 	<message key="xmlui.ArtifactBrowser.CommunityViewer.head_sub_communities">Sub-communities within this community</message>
 	<message key="xmlui.ArtifactBrowser.CommunityViewer.head_sub_collections">Collections in this community</message>
@@ -283,6 +311,8 @@
 	<message key="xmlui.ArtifactBrowser.Navigation.browse_dateaccessioned">By Submit Date</message>
 	<message key="xmlui.ArtifactBrowser.Navigation.browse_citation">By Citation</message>
 	<message key="xmlui.ArtifactBrowser.Navigation.browse_taskcode">By TaskCode</message>
+	<message key="xmlui.ArtifactBrowser.Navigation.browse_type">By Type</message>
+	<message key="xmlui.ArtifactBrowser.Navigation.browse_program">By Program</message>
 	<message key="xmlui.ArtifactBrowser.Navigation.head_this_collection">This Collection</message>
 	<message key="xmlui.ArtifactBrowser.Navigation.head_this_community">This Community</message>
 
@@ -295,6 +325,8 @@
 	<message key="xmlui.ArtifactBrowser.SimpleSearch.head">Search</message>
 	<message key="xmlui.ArtifactBrowser.SimpleSearch.search_scope">Search Scope</message>
 	<message key="xmlui.ArtifactBrowser.SimpleSearch.full_text_search">Full Text Search</message>
+	<message key="xmlui.ArtifactBrowser.SimpleSearch.filter.type">Type</message>
+	<message key="xmlui.ArtifactBrowser.SimpleSearch.filter.program">Program</message>
 
 	<!-- org.dspace.app.xmlui.artifactbrowser.RestrictedItem.java -->
 	<message key="xmlui.ArtifactBrowser.RestrictedItem.title">This resource is restricted</message>
@@ -551,7 +583,7 @@
 	<message key="xmlui.EPerson.LoginChooser.para1">Log in via:</message>
 	<message key="org.dspace.authenticate.ShibAuthentication.title">Shibboleth Authentication</message>
 	<message key="org.dspace.eperson.LDAPAuthentication.title">LDAP Authentication</message>
-	<message key="org.dspace.eperson.PasswordAuthentication.title">Password Authentication</message>
+	<message key="org.dspace.eperson.PasswordAuthentication.title">DSpace Authentication</message>
 	<message key="org.dspace.eperson.X509Authentication.title">Web Certificate Authentication</message>
 
 	<!-- org.dspace.app.xmlui.eperson.FailedAuthentication -->

@@ -92,11 +92,11 @@ public class DSpaceCocoonServletFilter implements Filter
     		}
             catch (RuntimeException e)
             {
-                LOG.error(e.getMessage(), e);
+                LOG.error("RuntimeException starting harvest scheduler: " + e.getMessage(), e);
             }
     		catch (Exception e)
     		{
-                LOG.error(e.getMessage(), e);
+                LOG.error("Exception starting harvest scheduler: " + e.getMessage(), e);
     		}
     	}
     	

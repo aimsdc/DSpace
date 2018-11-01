@@ -116,7 +116,8 @@ public class HarvestedCollectionServiceImpl implements HarvestedCollectionServic
         expirationTime = calendar.getTime();
 
         int[] statuses = new int[]{HarvestedCollection.STATUS_READY, HarvestedCollection.STATUS_OAI_ERROR};
-        return harvestedCollectionDAO.findByLastHarvestedAndHarvestTypeAndHarvestStatusesAndHarvestTime(context, startTime, HarvestedCollection.TYPE_NONE, statuses, HarvestedCollection.STATUS_BUSY, expirationTime);
+        return harvestedCollectionDAO.findByLastHarvestedAndHarvestTypeAndHarvestStatusesAndHarvestTime(
+                context, startTime, HarvestedCollection.TYPE_NONE, statuses, HarvestedCollection.STATUS_BUSY, expirationTime);
     }
 
     @Override

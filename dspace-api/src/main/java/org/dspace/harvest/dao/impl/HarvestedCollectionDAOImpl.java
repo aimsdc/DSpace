@@ -69,14 +69,15 @@ public class HarvestedCollectionDAOImpl extends AbstractHibernateDAO<HarvestedCo
     }
 
     @Override
-    public List<HarvestedCollection> findByLastHarvestedAndHarvestTypeAndHarvestStatusesAndHarvestTime(Context context, Date startTime, int minimalType, int[] statuses, int expirationStatus, Date expirationTime) throws SQLException {
+    public List<HarvestedCollection> findByLastHarvestedAndHarvestTypeAndHarvestStatusesAndHarvestTime(
+            Context context, Date startTime, int minimalType, int[] statuses, int expirationStatus, Date expirationTime) throws SQLException {
 //      Old query: "SELECT * FROM harvested_collection WHERE
 // (last_harvested < ? or last_harvested is null) and harvest_type > ? and (harvest_status = ? or harvest_status = ? or (harvest_status=? and harvest_start_time < ?)) ORDER BY last_harvested",
 //                new java.sql.Timestamp(startTime.getTime()), 0, HarvestedCollection.STATUS_READY, HarvestedCollection.STATUS_OAI_ERROR, HarvestedCollection.STATUS_BUSY, new java.sql.Timestamp(expirationTime.getTime()));
         Criteria criteria = createCriteria(context, HarvestedCollection.class);
         LogicalExpression lastHarvestedRestriction = Restrictions.or(
-                Restrictions.lt("lastHarvested", startTime),
-                Restrictions.isNull("lastHarvested")
+                Restrictions.isNull("lastHarvested"),
+                Restrictions.lt("lastHarvested", startTime)
         );
         Disjunction statusRestriction = Restrictions.or();
         for (int status : statuses) {

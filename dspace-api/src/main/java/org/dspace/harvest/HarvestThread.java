@@ -12,6 +12,7 @@ import org.dspace.content.Collection;
 import org.dspace.content.factory.ContentServiceFactory;
 import org.dspace.content.service.CollectionService;
 import org.dspace.core.Context;
+import org.dspace.eperson.EPerson;
 import org.dspace.harvest.factory.HarvestServiceFactory;
 import org.dspace.harvest.service.HarvestedCollectionService;
 
@@ -26,18 +27,21 @@ public class HarvestThread extends Thread {
 
     private static final Logger log = Logger.getLogger(HarvestThread.class);
     protected UUID collectionId;
+    protected EPerson harvestAdmin;
     protected CollectionService collectionService = ContentServiceFactory.getInstance().getCollectionService();
     protected HarvestedCollectionService harvestedCollectionService = HarvestServiceFactory.getInstance().getHarvestedCollectionService();
 
 
-    protected HarvestThread(UUID collectionId) throws SQLException {
+    protected HarvestThread(UUID collectionId, EPerson harvestAdmin) throws SQLException {
         this.collectionId = collectionId;
+        this.harvestAdmin = harvestAdmin;
     }
 
     @Override
     public void run()
     {
-        log.info("Thread for collection " + collectionId + " starts.");
+        log.info("Thread for collection " + collectionId + " starts with harvest admin: " +
+                ((harvestAdmin != null) ? harvestAdmin.getEmail() : "null"));
         runHarvest();
     }
 
@@ -48,6 +52,7 @@ public class HarvestThread extends Thread {
         HarvestedCollection hc = null;
         try {
             context = new Context();
+            context.setCurrentUser(this.harvestAdmin);
             dso = collectionService.find(context, collectionId);
             hc = harvestedCollectionService.find(context, dso);
             try {
@@ -70,6 +75,7 @@ public class HarvestThread extends Thread {
                     harvestedCollectionService.update(context, hc);
                     context.restoreAuthSystemState();
                     context.complete();
+                    log.info("Thread for collection " + collectionId + " ends - Harvested Collection: " + hc.toString());
                 } catch (RuntimeException e) {
                     log.error("Unexpected exception while recovering from a harvesting error: " + e.getMessage(), e);
                     context.abort();

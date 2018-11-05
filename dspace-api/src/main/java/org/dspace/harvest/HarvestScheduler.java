@@ -283,7 +283,7 @@ public class HarvestScheduler implements Runnable {
         harvestedCollectionService.update(context, harvestedCollection);
         context.dispatchEvents();
 
-        HarvestThread ht = new HarvestThread(harvestedCollection.getCollection().getID());
+        HarvestThread ht = new HarvestThread(harvestedCollection.getCollection().getID(), harvestAdmin);
         harvestThreads.push(ht);
 
         log.debug("****** Queued up a thread. Active threads: " + harvestThreads.toString());

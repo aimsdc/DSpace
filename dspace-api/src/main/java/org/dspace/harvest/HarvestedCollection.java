@@ -180,4 +180,20 @@ public class HarvestedCollection implements ReloadableEntity<Integer>
     public Date getHarvestStartTime() {
     	return harvestStartTime;
     }
+
+    @Override
+    public String toString() {
+        return "HarvestedCollection{" +
+                "id=" + id +
+                ", collection=" + collection +
+                ", oaiSource='" + oaiSource + '\'' +
+                ", oaiSetId='" + oaiSetId + '\'' +
+                ", harvestType=" + harvestType +
+                ", harvestStatus=" + harvestStatus +
+                ", harvestStartTime=" + harvestStartTime +
+                ", lastHarvested=" + lastHarvested +
+                ", harvestMessage='" + harvestMessage + '\'' +
+                ", metadataConfigId='" + metadataConfigId + '\'' +
+                '}';
+    }
 }

@@ -557,8 +557,8 @@ public class OAIHarvester {
 		harvestRow.setHarvestStartTime(startTime);
 		harvestRow.setHarvestMessage("Harvest from " + oaiSource + " successful");
 		harvestRow.setHarvestStatus(HarvestedCollection.STATUS_READY);
-		log.info("Harvest from " + oaiSource + " successful. The process took " + timeTaken + " milliseconds. Harvested " + currentRecord + " items.");
 		harvestedCollection.update(ourContext, harvestRow);
+		log.info("Harvest from " + oaiSource + " successful. The process took " + timeTaken + " milliseconds. Harvested " + currentRecord + " items. Harvested Collection: " + harvestRow.toString());
 
 		ourContext.enableBatchMode(originalMode);
 	}

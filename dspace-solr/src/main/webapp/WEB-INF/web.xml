@@ -53,6 +53,16 @@
   <filter>
       <filter-name>LocalHostRestrictionFilter</filter-name>
       <filter-class>org.dspace.solr.filters.LocalHostRestrictionFilter</filter-class>
+      <!-- init paramters to allow access other then from localhost
+      <init-param>
+          <param-name>LocalHostRestrictionFilter.localhost</param-name>
+          <param-value>true</param-value>
+      </init-param>
+      <init-param>
+          <param-name>LocalHostRestrictionFilter.allow.ips</param-name>
+          <param-value>x.x.x.x,y.y.y.y,...</param-value>
+      </init-param>
+      -->
   </filter>
 
   <!-- Any path (name) registered in solrconfig.xml will be sent to that filter -->

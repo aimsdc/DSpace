@@ -7,10 +7,12 @@
  */
 package org.dspace.harvest.dao.impl;
 
+import org.apache.log4j.Logger;
 import org.dspace.content.Collection;
 import org.dspace.core.Context;
 import org.dspace.core.AbstractHibernateDAO;
 import org.dspace.harvest.HarvestedCollection;
+import org.dspace.harvest.HarvestedCollectionServiceImpl;
 import org.dspace.harvest.dao.HarvestedCollectionDAO;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Disjunction;
@@ -31,6 +33,8 @@ import java.util.List;
  */
 public class HarvestedCollectionDAOImpl extends AbstractHibernateDAO<HarvestedCollection> implements HarvestedCollectionDAO
 {
+    protected static Logger log = Logger.getLogger(HarvestedCollectionDAOImpl.class);
+
     protected HarvestedCollectionDAOImpl()
     {
         super();
@@ -98,8 +102,9 @@ public class HarvestedCollectionDAOImpl extends AbstractHibernateDAO<HarvestedCo
                 )
         );
         criteria.addOrder(Order.asc("lastHarvested"));
-        return list(criteria);
-
+        List<HarvestedCollection> resultList = list(criteria);
+        log.debug("HarvestedCollections found: " + ((resultList != null) ? resultList.size() : "0") + ", criteria: " + criteria.toString());
+        return resultList;
     }
 
     @Override
